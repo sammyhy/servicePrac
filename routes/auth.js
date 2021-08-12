@@ -22,7 +22,7 @@ router.post("/signUp", isNotLoggedIn, async (req, res, next) => {
     return res.redirect("/");
   } catch (error) {
     console.error(err);
-    next(err);
+    return next(err);
   }
 });
 
@@ -51,12 +51,16 @@ router.get("/logout", isLoggedIn, (req, res) => {
   res.redirect("/");
 });
 
-router.get('/kakao',passport.authenticate('kakao'));
+router.get("/kakao", passport.authenticate("kakao"));
 
-router.get('/kakao/callback',passport.authenticate('kakao',{
-  failureRedirect:'/',
-}), (req,res)=>{
-  res.redirect('/');
-});
+router.get(
+  "/kakao/callback",
+  passport.authenticate("kakao", {
+    failureRedirect: "/",
+  }),
+  (req, res) => {
+    res.redirect("/");
+  }
+);
 
 module.exports = router;
